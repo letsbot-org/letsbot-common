@@ -1,0 +1,44 @@
+group 'org.letsbot'
+version '1.0'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+    compile 'commons-codec:commons-codec:1.9'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+
+    testRuntime(
+            'com.athaydes:spock-reports:1.2.7'
+    )
+}
+
+task createPom {
+    doLast {
+        pom {
+            project {
+                packaging 'jar'
+                inceptionYear '2018'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+            }
+        }.writeTo("$buildDir/${project.name}-${version}.pom")
+    }
+}
